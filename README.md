@@ -135,7 +135,7 @@ Free to use for personal and commercial projects.
 
 ## 🙌 Credits
 
-Built with ❤️ for the Kiro Week 2 Challenge - Lazy Automation
+Built with ❤️ for the Kiro Week 2 Challenge - Lazy Automation By Payal Kumari
 
 ---
 
