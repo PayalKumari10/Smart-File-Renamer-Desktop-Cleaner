@@ -1,0 +1,93 @@
+{
+  "name": "Desktop Cleaner Workflow",
+  "version": "1.0.0",
+  "description": "Automated workflow to organize desktop files into categorized folders",
+  "trigger": {
+    "type": "manual",
+    "description": "Run this workflow to clean and organize your desktop"
+  },
+  "steps": [
+    {
+      "id": "scan_files",
+      "name": "Scan Desktop Files",
+      "action": "scan_directory",
+      "config": {
+        "path": "${DESKTOP_PATH}",
+        "recursive": false,
+        "exclude": [".DS_Store", "desktop.ini", "Thumbs.db"]
+      }
+    },
+    {
+      "id": "categorize_files",
+      "name": "Categorize Files",
+      "action": "categorize",
+      "config": {
+        "categories": {
+          "Images": {
+            "extensions": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".svg", ".webp", ".ico"],
+            "target_folder": "Images"
+          },
+          "Documents": {
+            "extensions": [".doc", ".docx", ".txt", ".rtf", ".odt"],
+            "target_folder": "Documents"
+          },
+          "PDFs": {
+            "extensions": [".pdf"],
+            "target_folder": "PDFs"
+          },
+          "Videos": {
+            "extensions": [".mp4", ".avi", ".mov", ".wmv", ".flv", ".mkv", ".webm"],
+            "target_folder": "Videos"
+          },
+          "Others": {
+            "extensions": ["*"],
+            "target_folder": "Others"
+          }
+        }
+      }
+    },
+    {
+      "id": "create_folders",
+      "name": "Create Category Folders",
+      "action": "create_directories",
+      "config": {
+        "base_path": "${DESKTOP_PATH}",
+        "folders": ["Images", "Documents", "PDFs", "Videos", "Others"]
+      }
+    },
+    {
+      "id": "move_files",
+      "name": "Move Files to Categories",
+      "action": "move_files",
+      "config": {
+        "source": "${DESKTOP_PATH}",
+        "use_categorization": true,
+        "skip_if_exists": true
+      }
+    },
+    {
+      "id": "generate_summary",
+      "name": "Generate Summary",
+      "action": "create_report",
+      "config": {
+        "output_file": "${DESKTOP_PATH}/cleanup_summary.txt",
+        "template": "Desktop cleaned successfully!\n\nFiles organized:\n- Images: ${count.images} files\n- Documents: ${count.documents} files\n- PDFs: ${count.pdfs} files\n- Videos: ${count.videos} files\n- Others: ${count.others} files\n\nTotal files processed: ${count.total}"
+      }
+    }
+  ],
+  "notifications": {
+    "on_success": {
+      "type": "message",
+      "content": "Desktop cleaned successfully! Check cleanup_summary.txt for details."
+    },
+    "on_error": {
+      "type": "message",
+      "content": "Error during cleanup: ${error.message}"
+    }
+  },
+  "settings": {
+    "dry_run": false,
+    "create_backup": true,
+    "log_level": "info"
+  }
+}

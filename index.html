@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart File Renamer & Desktop Cleaner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <rect width="32" height="32" rx="8" fill="url(#gradient)"/>
+                    <path d="M16 8L22 14H18V20H14V14H10L16 8Z" fill="white"/>
+                    <rect x="10" y="22" width="12" height="2" rx="1" fill="white"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="32" y2="32">
+                            <stop offset="0%" stop-color="#667eea"/>
+                            <stop offset="100%" stop-color="#764ba2"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span>FileFlow</span>
+            </div>
+            <p class="tagline">Smart File Renamer & Desktop Cleaner</p>
+        </header>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <!-- File Renamer Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>📝 Smart File Renamer</h2>
+                    <p>Upload files and rename them automatically</p>
+                </div>
+                
+                <div class="upload-zone" id="uploadZone">
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <path d="M24 8L32 16H28V28H20V16H16L24 8Z" fill="#667eea"/>
+                        <rect x="12" y="32" width="24" height="4" rx="2" fill="#667eea"/>
+                    </svg>
+                    <p>Drag & drop files here or click to browse</p>
+                    <input type="file" id="fileInput" multiple hidden>
+                </div>
+
+                <div class="rename-options">
+                    <h3>Rename Options</h3>
+                    <div class="options-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="removeSpaces">
+                            <span>Remove Spaces</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="addNumbering">
+                            <span>Add Numbering</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="lowercase">
+                            <span>Lowercase</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase">
+                            <span>Uppercase</span>
+                        </label>
+                    </div>
+                    
+                    <div class="prefix-input">
+                        <label for="prefix">Add Prefix:</label>
+                        <input type="text" id="prefix" placeholder="e.g., project_">
+                    </div>
+
+                    <button class="btn btn-primary" id="applyRename">Apply Rename</button>
+                </div>
+
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <h3>Preview</h3>
+                    <div class="preview-list" id="previewList"></div>
+                    <button class="btn btn-success" id="downloadBtn">Download ZIP</button>
+                </div>
+            </div>
+
+            <!-- Desktop Cleaner Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>🗂️ Desktop Cleaner</h2>
+                    <p>Organize files into categories</p>
+                </div>
+
+                <div class="cleaner-demo">
+                    <h3>Folder Simulation</h3>
+                    <p class="info-text">See how your files would be organized</p>
+                    
+                    <div class="folder-grid" id="folderGrid">
+                        <div class="folder-item">
+                            <div class="folder-icon">🖼️</div>
+                            <div class="folder-name">Images</div>
+                            <div class="folder-count" id="imagesCount">0 files</div>
+                        </div>
+                        <div class="folder-item">
+                            <div class="folder-icon">📄</div>
+                            <div class="folder-name">Documents</div>
+                            <div class="folder-count" id="documentsCount">0 files</div>
+                        </div>
+                        <div class="folder-item">
+                            <div class="folder-icon">📕</div>
+                            <div class="folder-name">PDFs</div>
+                            <div class="folder-count" id="pdfsCount">0 files</div>
+                        </div>
+                        <div class="folder-item">
+                            <div class="folder-icon">🎬</div>
+                            <div class="folder-name">Videos</div>
+                            <div class="folder-count" id="videosCount">0 files</div>
+                        </div>
+                        <div class="folder-item">
+                            <div class="folder-icon">📦</div>
+                            <div class="folder-name">Others</div>
+                            <div class="folder-count" id="othersCount">0 files</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-secondary" id="simulateBtn">Simulate Organization</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built for Kiro Week 2 Challenge • Lazy Automation Project By Payal Kumari</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

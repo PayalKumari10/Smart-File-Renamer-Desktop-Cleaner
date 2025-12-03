@@ -1,0 +1,115 @@
+#!/bin/bash
+# Desktop Cleanup Script
+# Organizes files on desktop into categorized folders
+
+# Configuration
+DESKTOP_PATH="${DESKTOP_PATH:-$HOME/Desktop}"
+DRY_RUN=false
+CREATE_BACKUP=true
+
+# Color codes for output
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+# File categories
+declare -A CATEGORIES
+CATEGORIES[Images]="jpg jpeg png gif bmp svg webp ico"
+CATEGORIES[Documents]="doc docx txt rtf odt"
+CATEGORIES[PDFs]="pdf"
+CATEGORIES[Videos]="mp4 avi mov wmv flv mkv webm"
+
+# Counters
+declare -A FILE_COUNTS
+FILE_COUNTS[Images]=0
+FILE_COUNTS[Documents]=0
+FILE_COUNTS[PDFs]=0
+FILE_COUNTS[Videos]=0
+FILE_COUNTS[Others]=0
+
+echo -e "${BLUE}=== Desktop Cleaner ===${NC}"
+echo "Target directory: $DESKTOP_PATH"
+echo ""
+
+# Create category folders
+for category in "${!CATEGORIES[@]}"; do
+    mkdir -p "$DESKTOP_PATH/$category"
+done
+mkdir -p "$DESKTOP_PATH/Others"
+
+# Function to get category for file
+get_category() {
+    local filename="$1"
+    local extension="${filename##*.}"
+    extension=$(echo "$extension" | tr '[:upper:]' '[:lower:]')
+    
+    for category in "${!CATEGORIES[@]}"; do
+        if [[ " ${CATEGORIES[$category]} " =~ " $extension " ]]; then
+            echo "$category"
+            return
+        fi
+    done
+    
+    echo "Others"
+}
+
+# Process files
+total_files=0
+cd "$DESKTOP_PATH" || exit 1
+
+for file in *; do
+    # Skip directories and hidden files
+    if [[ -d "$file" ]] || [[ "$file" == .* ]]; then
+        continue
+    fi
+    
+    # Skip system files
+    if [[ "$file" == "desktop.ini" ]] || [[ "$file" == ".DS_Store" ]] || [[ "$file" == "Thumbs.db" ]]; then
+        continue
+    fi
+    
+    category=$(get_category "$file")
+    
+    if [[ "$DRY_RUN" == false ]]; then
+        mv "$file" "$category/" 2>/dev/null
+    fi
+    
+    ((FILE_COUNTS[$category]++))
+    ((total_files++))
+    
+    echo -e "${GREEN}✓${NC} Moved: $file → $category/"
+done
+
+# Generate summary
+echo ""
+echo -e "${BLUE}=== Summary ===${NC}"
+echo "Desktop cleaned successfully!"
+echo ""
+echo "Files organized:"
+for category in Images Documents PDFs Videos Others; do
+    count=${FILE_COUNTS[$category]}
+    echo "  📁 $category: $count file(s)"
+done
+echo ""
+echo "Total files processed: $total_files"
+
+# Create summary file
+cat > "$DESKTOP_PATH/cleanup_summary.txt" << EOF
+Desktop Cleanup Summary
+=======================
+Date: $(date)
+
+Files organized:
+- Images: ${FILE_COUNTS[Images]} file(s)
+- Documents: ${FILE_COUNTS[Documents]} file(s)
+- PDFs: ${FILE_COUNTS[PDFs]} file(s)
+- Videos: ${FILE_COUNTS[Videos]} file(s)
+- Others: ${FILE_COUNTS[Others]} file(s)
+
+Total files processed: $total_files
+
+All files have been organized into their respective folders.
+EOF
+
+echo -e "${GREEN}Summary saved to cleanup_summary.txt${NC}"
