@@ -126,7 +126,7 @@ The app works perfectly on:
 - Clean, modern typography
 
 ## 📝 AWS builder link 
-https://builder.aws.com/content/35n3VnMJKbvq9a1BV2Fn2sy6S7a/building-vibelist-with-kiro-week-1-micro-tools-challenge
+builder.aws.com/content/36NoO3XmkjekJmQrvsWDLmv1vOJ/smart-file-renamer-and-desktop-cleaner-with-kiro-automation
 
 ## 🔒 Privacy
 
