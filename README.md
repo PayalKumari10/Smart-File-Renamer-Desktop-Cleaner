@@ -131,7 +131,7 @@ All file processing happens locally in your browser. No files are uploaded to an
 
 ## 📝 License
 
-Free to use for personal and commercial projects.
+This project is licensed under the MIT License. You are free to use, modify, and distribute it for personal or commercial purposes.
 
 ## 🙌 Credits
 
