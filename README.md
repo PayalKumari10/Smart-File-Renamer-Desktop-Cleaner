@@ -125,6 +125,9 @@ The app works perfectly on:
 - Emoji icons for visual appeal
 - Clean, modern typography
 
+## 📝 AWS builder link 
+https://builder.aws.com/content/35n3VnMJKbvq9a1BV2Fn2sy6S7a/building-vibelist-with-kiro-week-1-micro-tools-challenge
+
 ## 🔒 Privacy
 
 All file processing happens locally in your browser. No files are uploaded to any server. Your data stays on your device.
